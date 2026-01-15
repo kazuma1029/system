@@ -14,6 +14,11 @@ import os
 import torch
 
 import transformers
+
+# スクリプト位置から1つ上のディレクトリを基準にする（workspace のルート側）
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, '..'))
+
 print("Transformers version:", transformers.__version__)
 print("Transformers location:", transformers.__file__)
 
@@ -73,7 +78,7 @@ def load_reviews(movie_ids, label):
     reviews = []
     labels = []
     for movie_id in movie_ids:
-        file_path = f"./極性付きレビューファイル/{movie_id}.xlsx"
+        file_path = os.path.join(BASE_DIR, '極性付きレビューファイル', f"{movie_id}.xlsx")
         try:
             data = pd.read_excel(file_path)
             # 一列目がレビュー文、二列目が極性の列
